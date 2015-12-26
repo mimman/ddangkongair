@@ -1,0 +1,5 @@
+package com.mimman.membership.service;
+
+public class MemberService {
+
+}

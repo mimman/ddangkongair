@@ -1,0 +1,14 @@
+package com.mimman.membership.service;
+
+import com.mimman.membership.repository.Member;
+import com.mimman.mybatis.MemberManager;
+
+public class MemberServiceImpl implements MemberService {
+
+	public void getList(Member dto) {
+		//MemberManager.addUser(dto);
+	}
+
+	
+
+}

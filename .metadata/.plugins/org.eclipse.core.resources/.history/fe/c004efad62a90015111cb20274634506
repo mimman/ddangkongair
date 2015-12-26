@@ -1,0 +1,94 @@
+<%@ page contentType="text/html; charset=utf-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>회원서비스 &gt; 회원가입 &gt; 정보입력</title>
+</head>
+<body>
+	<form action="/z_CFC/register.action?param=REGPROC" method="post">
+		<div>
+			<div>
+				<label for="inputId">아이디</label> <input type="text" name="id">
+			</div>
+
+
+		</div>
+
+		<div>
+			<div>
+				<label for="inputPassword" class="col-xs-2 control-label">비밀번호</label>
+				<input type="password" class="form-control" name="password">
+					
+			</div>
+
+		</div>
+
+		<div>
+			<div>
+				<label for="inputConfirPw">비밀번호 확인</label> 
+				<input type="password" name="confirmPw" placeholder="비밀번호 확인">
+			</div>
+
+		</div>
+
+		<div>
+			<div>
+				<label for="inputName">이름</label> <input type="text" name="name" >
+			</div>
+			<div></div>
+		</div>
+		<div>
+			<div>
+				<label for="inputBirth">생년 월 일</label> <input type="text" name="birth">
+			</div>
+			<div></div>
+		</div>
+
+
+		<div>
+			<div>
+				<label for="inputEmail">이메일</label> <input type="Email" name="email">
+			</div>
+
+		</div>
+		<div>
+			<div>
+				<label for="inputAddress">주소</label> <input type="text"
+					name="address" placeholder="주소">
+			</div>
+
+		</div>
+		<div>
+			<div>
+				<label for="inputNation">국가</label> <input type="text" name="nation"
+					placeholder="국가">
+			</div>
+
+		</div>
+		<div>
+			<div>
+				<label for="inputPhone">phone</label> <input type="text"
+					name="phone" placeholder="이메일">
+			</div>
+
+		</div>
+		<div>
+			<div>
+				<label for="inputAgree">약관 동의</label>
+			</div>
+			<div>
+				<input id="agree" type="checkbox" name="bo_agree" /> <label
+					for="agree"><a href="/agreement">&nbsp; 이용약관</a>에 동의합니다.</label>
+			</div>
+		</div>
+
+		<div>
+			<label for="inputName"></label>
+
+			<div>
+				<button type="submit">확인</button>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

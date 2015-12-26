@@ -1,0 +1,11 @@
+package com.mimman.membership.service;
+
+import com.mimman.mybatis.MemberManager;
+
+public class MemberServiceImpl implements MemberService {
+
+	public void getList(String id) {
+		MemberManager.addUser(id);
+	}
+
+}

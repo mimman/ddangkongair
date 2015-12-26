@@ -1,0 +1,7 @@
+package com.mimman.membership.service;
+
+public interface MemberService {
+	public void getList(String id);
+		
+	
+}

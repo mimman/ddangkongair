@@ -1,0 +1,10 @@
+package com.mimman.membership.service;
+
+public class MemberServiceImpl implements MemberService {
+
+	public void getList(String id) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

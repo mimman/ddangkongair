@@ -1,0 +1,44 @@
+package com.mimman.membership.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.mimman.membership.repository.Member;
+import com.mimman.membership.service.MemberService;
+
+@Controller
+public class RegUserController {
+	private MemberService memberService;
+	
+	public void setMemberService(MemberService memberService) {
+		this.memberService = memberService;
+	}
+	
+	@RequestMapping("joinCheck.action")
+	public String joinCheck(Member dto){
+		memberService.
+
+		return "/WEB-INF/views/membership/joinOk.jsp";
+	}
+	/*
+	@RequestMapping("membership.action")
+	public ModelAndView pageHandler2(){
+		System.out.println("membership.action");
+		ModelAndView mav = new ModelAndView("/WEB-INF/views/membership/joinInfo.jsp");
+		
+		return mav;
+	}
+	*/
+	@RequestMapping("membership.action")
+	public String pageHandler2(){
+
+		return "/WEB-INF/views/membership/agree.jsp";
+	}
+	
+	@RequestMapping("agree.action")
+	public String agree(String agree){
+
+		return "/WEB-INF/views/membership/joinInfo.jsp";
+	}
+}

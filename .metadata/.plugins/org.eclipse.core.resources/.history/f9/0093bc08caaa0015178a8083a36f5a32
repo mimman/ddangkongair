@@ -1,0 +1,27 @@
+package com.mimman.mybatis;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
+public class MemberManager {
+	private static SqlSessionFactory sqlFactory;
+	static{
+		try{
+			Reader reader = 
+				Resources.getResourceAsReader("mybatis/sqlmapConfig.xml");
+			
+			sqlFactory = new SqlSessionFactoryBuilder().build(reader);
+		}
+		catch(IOException err){
+			throw new RuntimeException("SqlSessionFactory 인스턴스 생성 실패 : " + err);
+		}
+	}
+	
+	public static void select(){
+		
+		SqlSession session = sqlFactory.openSession();
+		session.selectOne("select"); //write 라는 아이디를 매핑한다.  
+		System.out.println("mapping 통과");
+		session.commit(); //update, insert는 commit을 해줘야 한다
+	}
+}

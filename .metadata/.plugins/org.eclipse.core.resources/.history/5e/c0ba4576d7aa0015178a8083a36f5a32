@@ -1,0 +1,5 @@
+package com.mimman.membership.repository;
+
+public class RegisterRequest {
+
+}

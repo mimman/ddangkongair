@@ -1,0 +1,288 @@
+<%@ page contentType="text/html; charset=utf-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>회원서비스 &gt; 회원가입 &gt; 정보입력</title>
+<script>
+function joinNullCheck() {
+    
+    var userId= $("#userId").css("backgroundColor");
+    var userPwd= $("#userPwd").css("backgroundColor");
+    var userPwdConf= $("#userPwd_confirm").css("backgroundColor");
+    var userCell= $("#userCell").css("backgroundColor");
+    var userName= $("#userId").val();
+    var userBirth= $("#userId").css("backgroundColor");
+    var pattern = "rgb(71, 200, 62)";
+    
+    if(userId != pattern || userPwd != pattern ||userPwdConf != pattern || userCell != pattern || userName == "" || userBirth != pattern){
+       alert("입력값을 확인하세요");
+    }else{
+       document.joinForm.action = '/app/user/addUser';
+       document.joinForm.submit();
+    }
+ }
+
+$(function() {
+ 
+  $( "#userBirth" ).datepicker({
+     dateFormat:'yy-mm-dd',
+    yearRange: '1900:2020',
+    changeMonth: true, 
+      changeYear: true,
+    showAnim:'slideDown',
+    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    dayNames: ['일','월','화','수','목','금','토'],
+    dayNamesShort: ['일','월','화','수','목','금','토'],
+    dayNamesMin: ['일','월','화','수','목','금','토'],
+    showMonthAfterYear: true,
+    yearSuffix: '년',
+    showOtherMonths: true,
+    selectOtherMonths: true
+  });
+  
+ ///비밀번호 입력 확인   
+  $("#userPwd").keyup(function(){
+    var pass = $("#userPwd").val();
+    var passConf = $("#userPwd_confirm").val();
+    var checkPattern = /^[a-z]+[0-9]+([a-z]+|[0-9]+)*|[0-9]+[a-z]+([a-z]+|[0-9]+)*/i;
+    
+    if(pass == ""){
+       $("#userPwd").css("backgroundColor","white");
+       $("#userPwdUse").text("");
+       $("#userPwd_confirm").css("backgroundColor","white");
+       $("#userPwd_confirm").val("");
+       $("#userPwdCheck").text("");
+       $("#userPwd_confirm").attr("disabled",true);
+    }else if(checkPattern.test(pass) && pass.length >= 8){
+       $("#userPwd").css("backgroundColor","#47C83E");
+       $("#userPwdUse").html("<font size='2' color='#6FBF69'>사용가능합니다.</font>");
+       $("#userPwd_confirm").attr("disabled",false);
+       if(pass==passConf) {
+          $("#userPwd_confirm").css("backgroundColor","#47C83E");
+          $("#userPwdCheck").html("<font size='2' color='#6FBF69'>비밀번호가 일치합니다.</font>");
+       }
+    }else {
+       $("#userPwd").css("backgroundColor","#FF6E57");
+       $("#userPwdUse").html("<font size='2' color='#FF6E57'>영문+숫자로 8자 이상 입력해주세요.</font>");
+       $("#userPwd_confirm").attr("disabled",true);
+       if(passConf != "" && passConf != null){
+          $("#userPwd_confirm").css("backgroundColor","#FF6E57");
+          $("#userPwdCheck").html("<font size='2' color='#FF6E57'>비밀번호가 일치하지 않습니다.</font>");
+       }
+    }
+ });
+ 
+ ///비밀번호 일치 확인
+ $("#userPwd_confirm").keyup(function(){
+    var pass1=$("#userPwd").val();
+    var pass2=$("#userPwd_confirm").val();
+    
+    if(pass2 == ""){
+       
+       $("#userPwd_confirm").css("backgroundColor","white");
+       $("#userPwdCheck").text("");
+       
+    }else if(pass1==pass2) {
+       $("#userPwd_confirm").css("backgroundColor","#47C83E");
+       $("#userPwdCheck").html("<font size='2' color='#6FBF69'>비밀번호가 일치합니다.</font>");
+    } else {
+       $("#userPwd_confirm").css("backgroundColor","#FF6E57");
+       $("#userPwdCheck").html("<font size='2' color='#FF6E57'>비밀번호가 일치하지 않습니다.</font>");
+    }
+ });
+ 
+ ///mail check
+ $("#userId").change(function(){
+    
+    var mailAddr = $("#userId").val();
+    var pattern = /^([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/; 
+    
+    $.post("/app/user/checkId",{
+       userId : mailAddr,
+    },function(data){
+       console.log(data);
+       $("#userIdCheck").html(data);
+    });
+ });
+ 
+ //cell check
+ $("#userCell").change(function(){
+    
+    var cell = $(this).val();
+    var phone1,phone2,phone3;
+    
+    if(cell.length ==11){
+       phone1 = cell.substring(0,3);
+       phone2 = cell.substring(3,7);
+       phone3 = cell.substring(7);
+       
+       cell = phone1+"-"+phone2+"-"+phone3;
+       $(this).val(cell);
+    }else if(cell.length ==10){
+       phone1 = cell.substring(0,3);
+       phone2 = cell.substring(3,6);
+       phone3 = cell.substring(6);
+       
+       cell = phone1+"-"+phone2+"-"+phone3;
+       $(this).val(cell);
+    }
+    
+    var pattern = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/; 
+    
+    if(cell == ""){
+       $("#userCell").css("backgroundColor","white");
+    }else if(pattern.test(cell)){
+       $("#userCell").css("backgroundColor","#47C83E");
+    }else{
+       $("#userCell").css("backgroundColor","#FF6E57");
+    };
+ });
+ 
+ //birth check
+ $("#userBirth").change(function(){
+    var userBirth = $("#userBirth").val();
+    var year,month,day;
+    
+    if(userBirth.length ==8 && userBirth.indexOf("-") == -1){
+       year = userBirth.substring(0,4);
+       month = userBirth.substring(4,6);
+       day = userBirth.substring(6);
+       
+       userBirth = year+"-"+month+"-"+day;
+       $(this).val(userBirth);
+    }
+    
+    if(userBirth.length ==8 && userBirth.indexOf("-") != -1){
+       
+       year = userBirth.split("-")[0];
+       month = userBirth.split("-")[1];
+       day = userBirth.split("-")[2];
+       
+       if(year <14){
+          year = "20"+year;
+       }else{
+          year = "19"+year;
+       }
+       
+       userBirth = year+"-"+month+"-"+day;
+       $(this).val(userBirth);
+       
+    }
+    
+    if(userBirth.length == 6){
+       year = userBirth.substring(0,2);
+       month = userBirth.substring(2,4);
+       day = userBirth.substring(4);
+       
+       if(year <14){
+          year = "20"+year;
+       }else{
+          year = "19"+year;
+       }
+       
+       userBirth = year+"-"+month+"-"+day;
+       $(this).val(userBirth);
+    }
+    
+    var pattern = /^(19[0-9][0-9]|20[0-1][0-9])-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/; 
+    
+    if(userBirth == ""){
+       $("#userBirth").css("backgroundColor","white");
+    }else if(pattern.test(userBirth)){
+       $("#userBirth").css("backgroundColor","#47C83E");
+    }else{
+       $("#userBirth").css("backgroundColor","#FF6E57");
+    };
+ });
+ 
+ 
+});
+</script>
+</head>
+<body>
+	<form action="/z_CFC/register.action?param=REGPROC" method="post">
+		<div>
+			<div>
+				<label for="inputId">아이디</label> <input type="text" name="id">
+			</div>
+
+
+		</div>
+
+		<div>
+			<div>
+				<label for="inputPassword">비밀번호</label>
+				<input type="password" class="form-control" name="password">
+					
+			</div>
+
+		</div>
+
+		<div>
+			<div>
+				<label for="inputConfirPw">비밀번호 확인</label> 
+				<input type="password" name="confirmPw">
+			</div>
+
+		</div>
+
+		<div>
+			<div>
+				<label for="inputName">이름</label> <input type="text" name="userId" >
+			</div>
+			<div></div>
+		</div>
+		<div>
+			<div>
+				<label for="inputBirth">생년 월 일</label> <input type="text" name="userBirth">
+			</div>
+			<div></div>
+		</div>
+
+
+		<div>
+			<div>
+				<label for="inputEmail">이메일</label> <input type="Email" name="email">
+			</div>
+
+		</div>
+		<div>
+			<div>
+				<label for="inputAddress">주소</label> <input type="text" name="address">
+			</div>
+
+		</div>
+		<div>
+			<div>
+				<label for="inputNation">국가</label> <input type="text" name="nation">
+					
+			</div>
+
+		</div>
+		<div>
+			<div>
+				<label for="inputPhone">phone</label> <input type="text" name="phone" >
+			</div>
+
+		</div>
+		<div>
+			<div>
+				<label for="inputAgree">약관 동의</label>
+			</div>
+			<div>
+				<input id="agree" type="checkbox" name="bo_agree" /> <label
+					for="agree"><a href="/agreement">&nbsp; 이용약관</a>에 동의합니다.</label>
+			</div>
+		</div>
+
+		<div>
+			<label for="inputName"></label>
+
+			<div>
+				<button type="submit">확인</button>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+location.href="/main.action"
+</script>
+
+<title>Insert title here</title>
+</head>
+<body>
+인덱스
+</body>
+</html>

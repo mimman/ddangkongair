@@ -1,0 +1,18 @@
+package membership.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class RegUserController {
+
+	
+	
+	@RequestMapping("membership.action")
+	public ModelAndView pageHandler2(){
+		ModelAndView mav = new ModelAndView("/WEB-INF/views/main/if_main.jsp");
+		
+		return mav;
+	}
+}

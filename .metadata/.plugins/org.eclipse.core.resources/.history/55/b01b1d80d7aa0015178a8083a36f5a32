@@ -1,0 +1,11 @@
+package com.mimman.membership.repository;
+
+import java.util.Date;
+
+public class RegisterRequest {
+	private String id;
+	private String password;
+	private String password_confirm;
+	private String name;
+	private Date birth;
+}
